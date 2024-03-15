@@ -1,8 +1,5 @@
 import re
 import pandas as pd 
-f =open('chat.txt','r',encoding='utf-8')
-data = f.read()
-print(data)
 
 def preprocess(data):
     pattern = '\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s[AP]M\s-\s'
@@ -12,7 +9,7 @@ def preprocess(data):
 
     df['message_date'] = df['message_date'].str.replace('\u202f', ' ')
 
-   # 2. Parse datetime with adjusted format string
+    # Parse datetime with adjusted format string
     df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %I:%M %p - ')
     df.rename(columns={'message_date': 'date'}, inplace=True)
     users = []
@@ -48,6 +45,7 @@ def preprocess(data):
             period.append(str(hour) + "-" + str(hour + 1))
     
     df['period'] = period
-       
+    return df
 
+    
 
